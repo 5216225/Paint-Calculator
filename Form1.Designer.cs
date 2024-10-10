@@ -98,7 +98,6 @@ namespace Paint_Calculator {
             this.textBox1.Text = "Enter length of room in meters";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox1.Click += new System.EventHandler(this.textBox1_Click);
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // textBox2
             // 
@@ -108,6 +107,7 @@ namespace Paint_Calculator {
             this.textBox2.TabIndex = 13;
             this.textBox2.Text = "Enter width of room in meters";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox2.Click += new System.EventHandler(this.textBox2_Click);
             // 
             // textBox3
             // 
@@ -117,6 +117,7 @@ namespace Paint_Calculator {
             this.textBox3.TabIndex = 14;
             this.textBox3.Text = "Enter height of room in meters";
             this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox3.Click += new System.EventHandler(this.textBox3_Click);
             // 
             // Form1
             // 
@@ -147,8 +148,8 @@ namespace Paint_Calculator {
         private System.Windows.Forms.ToolStripMenuItem addColourToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem colourToolStripMenuItem;
         private System.Windows.Forms.TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox3;
     }
 }
 

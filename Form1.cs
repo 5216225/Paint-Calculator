@@ -18,6 +18,10 @@ namespace Paint_Calculator {
             ColourValues.ChosenColour = ColourValues.Colours.ElementAt(0);
 
             InitializeComponent();
+            ToolTip toolTip = new ToolTip();
+            toolTip.SetToolTip(textBox1, "Enter length in meters");
+            toolTip.SetToolTip(textBox2, "Enter width in meters");
+            toolTip.SetToolTip(textBox3, "Enter height in meters");
         }
 
         private void setToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -81,12 +85,15 @@ namespace Paint_Calculator {
 
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
+           
             try
             {
                 // Input validation and parsing
                 double length = double.Parse(textBox1.Text);
                 double width = double.Parse(textBox2.Text);
                 double height = double.Parse(textBox3.Text);
+
+                if (!ValidateInputs(out length, out width, out height)) return;
 
                 // 1. Calculate the area of the floor
                 double floorArea = length * width;
