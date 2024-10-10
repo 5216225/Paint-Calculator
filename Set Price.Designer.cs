@@ -75,8 +75,7 @@
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.comboBox1);
             this.Name = "Set_Price";
-            this.Text = "Set_Price";
-            this.Load += new System.EventHandler(this.Set_Price_Load);
+            this.Text = "Set_Price";            
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
