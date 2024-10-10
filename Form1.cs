@@ -129,5 +129,13 @@ namespace Paint_Calculator {
         private void Form1_FormClosed(object sender, EventArgs e) {
             FileHandling.WriteColours(ColourValues.Colours.ToArray());
         }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            MessageBox.Show("Fields cleared. Please enter new values.");
+        }
     }
 }
