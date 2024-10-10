@@ -1,73 +1,106 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System; // Provides fundamental classes and base classes for commonly-used value and reference data types
+using System.Collections.Generic; // Provides classes for defining generic collections
+using System.IO; // Provides functionality for working with files and data streams
+using System.Linq; // Provides classes and interfaces that support queries using Language-Integrated Query (LINQ)
 
-namespace Paint_Calculator {
-    class FileHandling {
+namespace Paint_Calculator
+{
+    class FileHandling
+    {
+        // Default color options with their prices
+        private static Colour[] DefaultColours = {
+            new Colour("Red", Convert.ToDecimal(1.0)),
+            new Colour("Blue", Convert.ToDecimal(1.0)),
+            new Colour("Green", Convert.ToDecimal(1.0))
+        };
 
-        private static Colour[] DefaultColours = { new Colour("Red", Convert.ToDecimal(1.0)), new Colour("Blue", Convert.ToDecimal(1.0)), new Colour("Green", Convert.ToDecimal(1.0)) };
+        // File location for storing color data
+        private static string _FileLocation =
+            System.Windows.Forms.Application.CommonAppDataPath + "/colours.txt";
 
-        private static string _FileLocation = System.Windows.Forms.Application.CommonAppDataPath + "/colours.txt";
-        public static string FileLocation {
-            get {
+        // Public property to access the file location
+        public static string FileLocation
+        {
+            get
+            {
                 return _FileLocation;
             }
         }
 
-        public static void LoadColours() {
-            if (!File.Exists(FileLocation)) {
-                CleanFile();
-                WriteColours(DefaultColours);
+        public static void LoadColours()
+        {
+            // Check if the colors file exists, if not create it and write default colors
+            if (!File.Exists(FileLocation))
+            {
+                CleanFile(); // Ensure the file is clean
+                WriteColours(DefaultColours); // Write default colors to the file
             }
 
-            StreamReader sr = new StreamReader(FileLocation);
+            // Use a StreamReader to read colors from the file
+            using (StreamReader sr = new StreamReader(FileLocation))
+            {
+                // Read lines until the end of the file
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine(); // Read a line from the file
 
-            while (!sr.EndOfStream) {
-                String x = sr.ReadLine();
+                    // Split the line into parts
+                    string[] parts = line.Split(new[] { "!|!" }, StringSplitOptions.RemoveEmptyEntries);
 
-                String[] z = x.Split("!|!".ToCharArray());
-                List<String> y = new List<string>();
+                    // Ensure we have the correct number of parts
+                    if (parts.Length >= 2)
+                    {
+                        // Parse color name and price
+                        string name = parts[0];
+                        decimal price = decimal.Parse(parts[1]);
 
-                foreach (var item in z) {
-                    if(!(item == "")) {
-                        y.Add(item);
+                        // Add the color to the ColourValues collection
+                        ColourValues.Colours.Add(new Colour(name, price));
                     }
                 }
-
-                decimal price = decimal.Parse(y.ToArray()[1]);
-
-                ColourValues.Colours.Add(new Colour(y.ToArray()[0], price));
             }
-
-            sr.Close();
         }
 
-        public static void WriteColours(Colour[] colours) {
-            StreamWriter sw = new StreamWriter(FileLocation);
-
+        public static void WriteColours(Colour[] colours)
+        {
+            // Clean the file before writing new colors
             CleanFile();
-            foreach (var item in colours) {
-                sw.WriteLine(item.Name + "!|!" + item.Price);
-            }
 
-            sw.Close();
+            // Use a StreamWriter to write colors to the file
+            using (StreamWriter sw = new StreamWriter(FileLocation))
+            {
+                foreach (var item in colours)
+                {
+                    sw.WriteLine($"{item.Name}!|!{item.Price}"); // Write each color as a line in the file
+                }
+            }
         }
 
-        private static void CleanFile() {
-            try {
-                File.Delete(FileLocation);
-            } catch (Exception) {
-
+        private static void CleanFile()
+        {
+            try
+            {
+                if (File.Exists(FileLocation))
+                {
+                    File.Delete(FileLocation); // Delete the existing file
+                }
             }
-            try {
-                File.Create(FileLocation).Close();
-            } catch (Exception) {
-
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed
+                Console.WriteLine($"Error deleting file: {ex.Message}");
             }
 
+            // Create a new empty file
+            try
+            {
+                File.Create(FileLocation).Close(); // Ensure the file is created and closed
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed
+                Console.WriteLine($"Error creating file: {ex.Message}");
+            }
         }
     }
 }
