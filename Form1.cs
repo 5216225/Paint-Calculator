@@ -44,6 +44,41 @@ namespace Paint_Calculator {
             this.textBox3.Clear();
         }
 
+        private bool ValidateInputs(out double length, out double width, out double height)
+        {
+            bool isValid = true;
+
+            // Check if the input fields are empty
+            if (string.IsNullOrWhiteSpace(textBox1.Text) ||
+                string.IsNullOrWhiteSpace(textBox2.Text) ||
+                string.IsNullOrWhiteSpace(textBox3.Text))
+            {
+                MessageBox.Show("Please fill in all fields.");
+                isValid = false;
+            }
+
+            // Attempt to parse the inputs
+            if (!double.TryParse(textBox1.Text, out length) || length <= 0)
+            {
+                MessageBox.Show("Please enter a valid positive number for length.");
+                isValid = false;
+            }
+
+            if (!double.TryParse(textBox2.Text, out width) || width <= 0)
+            {
+                MessageBox.Show("Please enter a valid positive number for width.");
+                isValid = false;
+            }
+
+            if (!double.TryParse(textBox3.Text, out height) || height <= 0)
+            {
+                MessageBox.Show("Please enter a valid positive number for height.");
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
             try
@@ -86,19 +121,6 @@ namespace Paint_Calculator {
 
         private void Form1_FormClosed(object sender, EventArgs e) {
             FileHandling.WriteColours(ColourValues.Colours.ToArray());
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
