@@ -111,13 +111,13 @@ namespace Paint_Calculator {
                 double roomVolume = length * width * height;
 
                 // Prepare results for display
-                string resultMessage = $"Floor Area: {floorArea:F2} square meters\n" +
-                                        $"Paint Required: {paintRequired:F2} liters\n" +
-                                        $"Room Volume: {roomVolume:F2} cubic meters\n" +
-                                        $"Total Paint Cost: £{paintCost:F2}";
-
+                StringBuilder resultBuilder = new StringBuilder();
+                resultBuilder.AppendLine($"Floor Area: {floorArea:F2} square meters");
+                resultBuilder.AppendLine($"Paint Required: {paintRequired:F2} liters");
+                resultBuilder.AppendLine($"Room Volume: {roomVolume:F2} cubic meters");
+                resultBuilder.AppendLine($"Total Paint Cost: {paintCost:C2}");
                 // Display results in a single message box
-                MessageBox.Show(resultMessage);
+                MessageBox.Show(resultBuilder.ToString());
             }
             catch (FormatException)
             {
