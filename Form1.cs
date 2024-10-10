@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -137,5 +138,13 @@ namespace Paint_Calculator {
             textBox3.Clear();
             MessageBox.Show("Fields cleared. Please enter new values.");
         }
+
+        private void LogError(string message)
+        {
+            using (StreamWriter writer = new StreamWriter("errorlog.txt", true))
+            {
+                writer.WriteLine($"{DateTime.Now}: {message}");
+            }
+        }     
     }
 }
